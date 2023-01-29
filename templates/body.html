@@ -1,0 +1,40 @@
+{% extends 'home.html' %}
+{% block body %}
+    <body class="d-flex flex-column h-100">
+    {% include 'header.html' %}
+    <main role="main" class="flex-shrink-0 mt-5">
+        <div class="container-fluid" style="width: 80%;">
+            <nav aria-label="breadcrumb" class="mt-4 mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Bienvenido {{ request.user.get_full_name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="{{ list_url }}">{{ entity }}</a>
+                    </li>
+                </ol>
+            </nav>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+    {% block javascript %}{% endblock %}
+
+    <script type="application/javascript">
+        {% if messages %}
+            var html = '<p>';
+            {% for message in messages %}
+                html += '{{ message }}<br>';
+            {% endfor %}
+            html += '</p>';
+            Swal.fire({
+                title: 'Error!',
+                html: html,
+                icon: 'error'
+            });
+        {% endif %}
+    </script>
+    </body>
+{% endblock %}

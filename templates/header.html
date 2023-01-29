@@ -1,0 +1,103 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="{% url 'dashboard' %}">
+        <i class="fa-solid fa-cart-shopping"></i> SOFT-UNEMI
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'dashboard' %}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'company_update' %}">
+                    <i class="fa-solid fa-building"></i> Compañia
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'category_list' %}">
+                    <i class="fa-solid fa-boxes-stacked"></i> Categorías
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'product_list' %}">
+                    <i class="fa-solid fa-dolly"></i> Productos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'client_list' %}">
+                    <i class="fa-solid fa-users"></i> Clientes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/auth/group/">
+                    <i class="fa-solid fa-lock"></i> Perfiles
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_list' %}">
+                    <i class="fa-solid fa-user"></i> Usuarios
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'sale_list' %}">
+                    <i class="fa-solid fa-cart-shopping"></i> Ventas
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown16" data-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-chart-bar"></i>  Reportes</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown16">
+                    <li><a class="dropdown-item" href="{% url 'sale_report' %}"><i class="fa-solid fa-chart-pie"></i> Ventas</a></li>
+                    <li><a class="dropdown-item" href="{% url 'client_report' %}"><i class="fa-solid fa-chart-pie"></i> Clientes</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="navbar-nav my-2 my-lg-0 float-right">
+            {% if request.user.groups.all %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link{% if request.user.groups.all.count > 1 %} dropdown-toggle{% endif %}" href="#" id="dropdown02" data-toggle="dropdown" aria-expanded="false">
+                        {{ request.session.group }}
+                    </a>
+                    {% if request.user.groups.all.count > 1 %}
+                        <div class="dropdown-menu" aria-labelledby="dropdown02">
+                            {% for g in request.user.groups.all %}
+                                {% if g.id != request.session.group.id %}
+                                    <a class="dropdown-item" href="{% url 'user_choose_profile' g.id %}">
+                                        {{ g.name }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">
+                    Bienvenido {{ request.user.username }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
+                     <span class="dropdown-header">
+                        Sú último acceso fue {{ request.user.last_login }}
+                    </span>
+                    <a href="{% url 'user_update_profile' %}" class="dropdown-item">
+                        <i class="fas fa-edit"></i> Editar perfil
+                    </a>
+                    <a href="{% url 'user_change_password' %}" class="dropdown-item">
+                        <i class="fas fa-lock"></i> Editar password
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'logout' %}" class="dropdown-item">
+                        <i class="fas fa-power-off"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">
+                    <i class="fas fa-power-off" aria-hidden="true"></i> Cerrar Sesión
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

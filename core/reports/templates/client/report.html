@@ -1,0 +1,25 @@
+{% extends 'report.html' %}
+{% load static %}
+{% block head_report %}
+    <script src="{% static 'lib/tempusdominus-bootstrap-4.5.37.0/js/tempusdominus-bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/tempusdominus-bootstrap-4.5.37.0/css/tempusdominus-bootstrap.css' %}"/>
+    <script src="{% static 'lib/highcharts-9.1.1/highcharts.js' %}" type="text/javascript"></script>
+    <script src="{% static 'lib/highcharts-9.1.1/highcharts-3d.js' %}" type="text/javascript"></script>
+    <script src="{% static 'lib/highcharts-9.1.1/modules/exporting.js' %}" type="text/javascript"></script>
+    <script src="{% static 'lib/highcharts-9.1.1/modules/data.js' %}" type="text/javascript"></script>
+    <script src="{% static 'lib/highcharts-9.1.1/modules/drilldown.js' %}" type="text/javascript"></script>
+    <script src="{% static 'client/js/report.js' %}"></script>
+{% endblock %}
+
+{% block content_report %}
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Año/Mes:</label>
+                {{ form.year_month }}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id="chart"></div>
+{% endblock %}
